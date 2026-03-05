@@ -24,7 +24,6 @@ class Camisa(db.Model):
     preco = db.Column(db.Float)
     imagem_url = db.Column(db.String(255))
 
-    # O to_dict PRECISA estar indentado dentro da classe
     def to_dict(self):
         return {
             "id": self.id,
@@ -41,7 +40,6 @@ def servir_imagem(filename):
 @app.route('/camisas', methods=['GET', 'POST'])
 def gerenciar_camisas():
     if request.method == 'POST':
-        # --- CORREÇÃO: Pegando os dados do formulário ---
         nome = request.form.get('nome')
         tamanho = request.form.get('tamanho')
         preco = request.form.get('preco')
@@ -66,7 +64,6 @@ def gerenciar_camisas():
         
         return jsonify({"mensagem": "Camisa cadastrada com sucesso!"}), 201
     
-    # Se for GET, retorna a lista para o catálogo
     camisas = Camisa.query.all()
     return jsonify([c.to_dict() for c in camisas])
 
